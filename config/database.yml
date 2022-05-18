@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 2
+  database: todo
+  username: postgres
+  password: 192837465
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: todo
+  
+production:
+  <<: *default
+  database: todo

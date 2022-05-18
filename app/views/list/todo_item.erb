@@ -1,0 +1,31 @@
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+											<td class="w-4 p-4">
+												<div class="flex items-center">
+												</div>
+											</td>
+											<th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap" title="<%=h(@item['label'])%>">
+												<p class="<%="#{'line-through text-green-500' if @item['is_done']}"%>"><%=sprintf("#{h(@item['title'])[0,8]}#{'...' if @item['title'].length > 8}")%></p>
+											</th>
+											<td class="px-6 py-4">
+												<%=Date.new(@item['created_at'].year,@item['created_at'].month,@item['created_at'].day).stamp("May 1, 2000") %>
+											</td>
+											<td class="px-6 py-4">
+												<% if @item['deadline'].today? && !@item['deadline'].past?%>
+                        <p class = "text-orange-700">Today at <%=@item['deadline'].strftime('%H:%M') %></p>
+                        <% elsif (@item['deadline'].year == (Date.today).year && @item['deadline'].month == (Date.today).month && @item['deadline'].day == (Date.today + 1).day)%>
+                        <p class = "text-orange-400">Tomorrow at <%=@item['deadline'].strftime('%H:%M') %><%#=Date.new(@item['deadline'].year,@item['deadline'].month,@item['deadline'].day).stamp("11:11") %></p>
+                        <% elsif @item['deadline'].past?  %>
+                        <p class = "text-rose-600">Missed</p>
+                        <% else %>
+                        <%=@item['deadline'].strftime('%b %e, %Y - %H:%M') %>
+                        <% end %>
+                    	</td>
+											<td class="px-6 py-4 text-right">
+                      <% if @item['is_done']%>
+                        <a href="<%=url("/todo/#{@item['id']}/toggledone")%>" class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline">Undone</a> ·
+                      <% else %>
+                        <a href="<%=url("/todo/#{@item['id']}/toggledone")%>" class="font-medium text-green-600 dark:text-green-500 hover:underline">Done</a> ·
+                      <% end %>
+												<a href="<%=url("/todo/#{@item['id']}/edit")%>" class="font-medium hover:underline">View/Edit</a>
+											</td>
+										</tr>
