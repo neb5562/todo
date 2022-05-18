@@ -3,6 +3,8 @@ require 'date'
 require 'cgi'
 
 class ApplicationController < Sinatra::Base
+  PER_PAGE = 6
+
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -12,26 +14,23 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    @per_page = 6
-    @page = params['page'].to_i % @per_page == 0 ? params['page'].to_i : 0
-    @list ||= logged_in? ? current_user.todos.offset(@page).limit(@per_page).where("deadline > now()").where(is_done: false).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
-    @count = @list.count
+    @page = params['page'].to_i % PER_PAGE == 0 ? params['page'].to_i : 0
+    @list ||= logged_in? ? current_user.todos.offset(@page).limit(PER_PAGE).where("deadline > now()").where(is_done: false).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
+    @count = current_user.todos.where("deadline > now()").where(is_done: false).count
     erb :'list/index'
   end
 
   get "/finished" do
-    @per_page = 6
-    @page = params['page'].to_i % @per_page == 0 ? params['page'].to_i : 0
-    @list ||= logged_in? ? current_user.todos.offset(@page).limit(@per_page).where(is_done: true).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
-    @count = @list.count
+    @page = params['page'].to_i % PER_PAGE == 0 ? params['page'].to_i : 0
+    @list ||= logged_in? ? current_user.todos.offset(@page).limit(PER_PAGE).where(is_done: true).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
+    @count = current_user.todos.where(is_done: true).count
     erb :'list/index'
   end
   
   get "/missed" do
-    @per_page = 6
-    @page = params['page'].to_i % @per_page == 0 ? params['page'].to_i : 0
-    @list ||= logged_in? ? current_user.todos.offset(@page).limit(@per_page).where(is_done: false).where("deadline < now()").order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
-    @count = @list.count
+    @page = params['page'].to_i % PER_PAGE == 0 ? params['page'].to_i : 0
+    @list ||= logged_in? ? current_user.todos.offset(@page).limit(PER_PAGE).where(is_done: false).where("deadline < now()").order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
+    @count = current_user.todos.offset(@page).limit(PER_PAGE).where(is_done: false).where("deadline < now()").count
     erb :'list/index'
   end
 
