@@ -1,0 +1,16 @@
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+											<td class="w-4 p-4">
+												<div class="flex items-center">
+												</div>
+											</td>
+											<th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+												<p>
+												<a class="flex space-x-4" href = "<%=url("/list/#{@item['id']}")%>"><%=sprintf("#{h(@item['name'])[0,8]}#{'...' if @item['name'].length > 8}")%><svg class="w-4 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></a></p>
+											</th>
+											<td class="px-6 py-4">
+												<%=@item.todos.count%>
+											</td>
+											<td class="px-6 py-4 text-right">
+												<a href="<%=url("/list/#{@item['id']}/edit")%>" class="font-medium hover:underline">Edit</a>
+											</td>
+										</tr>

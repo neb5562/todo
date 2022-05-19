@@ -1,13 +1,17 @@
 class TodoController < ApplicationController
 
-  get '/todo/new' do
-    erb :'list/new'
+  get '/list/:id/new/todo' do
+    @chk_list_id = params['id']
+
+    @lists = List::all()
+
+    erb :'todo/new'
   end
 
   get '/todo/:id/edit' do
     @todo = todo_check(params['id'])
 
-    erb :'list/edit'
+    erb :'todo/edit'
   end
 
   put '/todo/:id/edit' do
@@ -24,14 +28,14 @@ class TodoController < ApplicationController
 
   end
 
-  post '/todo' do
-    result = TodoValidateService.new(params).call
-
+  post '/list/:id/new/todo' do
+    result = TodoValidateService.new(params, current_user['id']).call
+    list_id = params['id']
     unless result.empty? 
       flash[:error_messages] = result
-      redirect('/todo/new')
+      redirect("/list/#{params['id']}/new/todo")
     else
-      TodoService.new(params, current_user['id']).call 
+      TodoService.new(params, list_id, current_user['id']).call 
       flash[:success_message] = 'To Do added successfully'
       redirect('/')
     end
@@ -53,10 +57,20 @@ class TodoController < ApplicationController
 
   private 
 
-  def todo_check(id)
+  def todo_check(todo_id)
     begin
-      todo ||= Todo.find(id)
+      todo ||= Todo::find(todo_id)
+      list ||= current_user.lists.find(todo['list_id'])
       return todo
+    rescue ActiveRecord::RecordNotFound
+      not_found
+    end
+  end
+
+  def list_check(id)
+    begin
+      list ||= current_user.lists.find(id)
+      return list
     rescue ActiveRecord::RecordNotFound
       not_found
     end

@@ -8,4 +8,5 @@ run ApplicationController
 use UsersController
 use AuthController
 use TodoController
+use ListController
 
