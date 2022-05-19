@@ -10,12 +10,15 @@ class TodoController < ApplicationController
 
   get '/todo/:id/edit' do
     @todo = todo_check(params['id'])
+    @lists = List::all()
+    @chk_list_id = params['id']
 
     erb :'todo/edit'
   end
 
   put '/todo/:id/edit' do
-    result = TodoValidateService.new(params).call
+
+    result = TodoValidateService.new(params, current_user['id']).call
 
     unless result.empty? 
       flash[:error_messages] = result
@@ -30,6 +33,7 @@ class TodoController < ApplicationController
 
   post '/list/:id/new/todo' do
     result = TodoValidateService.new(params, current_user['id']).call
+
     list_id = params['id']
     unless result.empty? 
       flash[:error_messages] = result
