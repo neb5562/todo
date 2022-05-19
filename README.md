@@ -10,4 +10,4 @@ This is simple todo app written in sinatra, using tailwind css framework in fron
 - run ``rackup config.ru`` or ``bundle exec rackup -p6969 --host 0.0.0.0``
 
 
-# Demo: [Demo heroku website](https://todosinatra6969.herokuapp.com/).
+# Demo: [Demo heroku website](https://todoneb69420.herokuapp.com).
