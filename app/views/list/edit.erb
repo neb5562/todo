@@ -1,0 +1,54 @@
+<div class="m-auto mt-6 p-6 rounded-lg shadow-lg bg-white max-w-sm">
+<% unless flash[:error_messages].nil? %>
+<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+  <% flash[:error_messages].each do |error| %>
+    <p class="font-medium"><%=error%></p> 
+  <% end %>
+</div>
+<% end %>
+  <form method = "post" action = "/list/<%=params['id']%>/edit">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="form-group mb-6">
+      <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">List Name</label>
+      <input value = "<%=@list['name']%>" name = "name" type="text" class="form-control
+        block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputname"
+        aria-describedby="nameHelp" placeholder="Enter list name">
+    </div>
+
+    <button type="submit" class="
+      px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out">Update</button>
+  </form>
+    <form method = "post" action = "/list/<%=@list['id']%>/delete">
+    <input type="hidden" name="_method" value="DELETE">
+
+    <button type="submit" class = "float-right text-red-500 text-xs">delete list</button>
+</form>
+</div>
