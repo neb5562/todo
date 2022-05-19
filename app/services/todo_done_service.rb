@@ -13,7 +13,7 @@ class TodoDoneService
   private
 
   def update_todo_done
-    todo = Todo.find_by(id: @id, user_id: @user['id'])
+    todo = Todo.find_by(id: @id)
     todo.is_done = !todo.is_done
     todo.save
   end

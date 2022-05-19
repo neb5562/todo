@@ -41,6 +41,7 @@ class ListController < ApplicationController
 
   get "/list/:id/finished" do
     @page = params['page'].to_i % PER_PAGE_TODO == 0 ? params['page'].to_i : 0
+    @list ||= current_user.lists.find_by(id: params['id'])
     @todo ||= logged_in? ? current_user.lists.find_by(id: params['id']).todos.offset(@page).limit(PER_PAGE_TODO).where(is_done: true).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
     @count = current_user.lists.find_by(id: params['id']).todos.where(is_done: true).count
     erb :'todo/index'
@@ -48,6 +49,7 @@ class ListController < ApplicationController
   
   get "/list/:id/missed" do
     @page = params['page'].to_i % PER_PAGE_TODO == 0 ? params['page'].to_i : 0
+    @list ||= current_user.lists.find_by(id: params['id'])
     @todo ||= logged_in? ? current_user.lists.find_by(id: params['id']).todos.offset(@page).limit(PER_PAGE_TODO).where(is_done: false).where("deadline < now()").order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
     @count = current_user.lists.find_by(id: params['id']).todos.offset(@page).limit(PER_PAGE_TODO).where(is_done: false).where("deadline < now()").count
     erb :'todo/index'
