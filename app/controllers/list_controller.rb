@@ -33,7 +33,7 @@ class ListController < ApplicationController
 
   get "/list/:id" do
     @page = params['page'].to_i % PER_PAGE_TODO == 0 ? params['page'].to_i : 0
-    @list ||= current_user.lists.find_by(id: params['id'])
+    @list ||= list_check(params['id'])# current_user.lists.find_by(id: params['id'])
     @todo ||= logged_in? ? @list.todos.offset(@page).limit(PER_PAGE_TODO).where("deadline > now()").where(is_done: false).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
     @count = @list.todos.where("deadline > now()").where(is_done: false).count
     erb :'todo/index'
@@ -41,7 +41,7 @@ class ListController < ApplicationController
 
   get "/list/:id/finished" do
     @page = params['page'].to_i % PER_PAGE_TODO == 0 ? params['page'].to_i : 0
-    @list ||= current_user.lists.find_by(id: params['id'])
+    @list ||= list_check(params['id'])
     @todo ||= logged_in? ? current_user.lists.find_by(id: params['id']).todos.offset(@page).limit(PER_PAGE_TODO).where(is_done: true).order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
     @count = current_user.lists.find_by(id: params['id']).todos.where(is_done: true).count
     erb :'todo/index'
@@ -49,7 +49,7 @@ class ListController < ApplicationController
   
   get "/list/:id/missed" do
     @page = params['page'].to_i % PER_PAGE_TODO == 0 ? params['page'].to_i : 0
-    @list ||= current_user.lists.find_by(id: params['id'])
+    @list ||= list_check(params['id'])
     @todo ||= logged_in? ? current_user.lists.find_by(id: params['id']).todos.offset(@page).limit(PER_PAGE_TODO).where(is_done: false).where("deadline < now()").order(Arel.sql("is_done desc, (deadline - now()) asc")) : nil
     @count = current_user.lists.find_by(id: params['id']).todos.offset(@page).limit(PER_PAGE_TODO).where(is_done: false).where("deadline < now()").count
     erb :'todo/index'
@@ -71,6 +71,17 @@ class ListController < ApplicationController
 
   private 
 
+  def todo_check(todo_id)
+    begin
+      todo ||= Todo::find(todo_id)
+      list ||= current_user.lists.find(todo['list_id'])
+      return todo
+    rescue ActiveRecord::RecordNotFound
+      not_found
+    end
+  end
+
+  
   def list_check(id)
     begin
       list ||= current_user.lists.find(id)

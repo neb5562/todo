@@ -46,6 +46,7 @@ class AuthController < ApplicationController
 
   post '/auth/register' do
     result = RegisterValidateService.new(params).call
+    
     if result.empty? 
       RegisterService.new(params).call 
       flash[:success_message] = 'Registered Successfully, you can login now'
