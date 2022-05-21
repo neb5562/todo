@@ -7,6 +7,7 @@
 </div>
 <% end %>
   <form method = "post" action = "/auth/register">
+   <%= csrf_tag %>
     <div class="form-group mb-6">
       <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">Email address</label>
       <input value= "<%=params['email']%>" name = "email" type="email" class="form-control

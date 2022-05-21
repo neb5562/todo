@@ -2,12 +2,6 @@ class AuthController < ApplicationController
 
   include BCrypt
 
-  before do
-    if (['/auth/register', '/auth/login'].any? request.path_info) && !session['user_id'].nil?
-      redirect('')
-    end
-  end
-
   configure do
     set :views, 'app/views'
     enable :sessions

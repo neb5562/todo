@@ -17,6 +17,7 @@
     <br>
 
   <form method = "post" action = "/profile/deactivate">
+   <%= csrf_tag %>
   <input type="hidden" name="_method" value="DELETE">
 
     <div class="form-group mb-6">

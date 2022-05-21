@@ -34,6 +34,7 @@
     <br>
 
   <form method = "post" action = "/profile/change_password">
+   <%= csrf_tag %>
   <input type="hidden" name="_method" value="PUT">
       <div class="form-group mb-6">
       <label for="exampleInputfull_name" class="form-label inline-block mb-2 text-gray-700">Full Name</label>

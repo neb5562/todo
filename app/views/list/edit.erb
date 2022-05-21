@@ -7,6 +7,7 @@
 </div>
 <% end %>
   <form method = "post" action = "/list/<%=params['id']%>/edit">
+   <%= csrf_tag %>
     <input type="hidden" name="_method" value="PUT">
     <div class="form-group mb-6">
       <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">List Name</label>
@@ -47,6 +48,7 @@
       ease-in-out">Update</button>
   </form>
     <form method = "post" action = "/list/<%=@list['id']%>/delete">
+     <%= csrf_tag %>
     <input type="hidden" name="_method" value="DELETE">
 
     <button type="submit" class = "float-right text-red-500 text-xs">delete list</button>

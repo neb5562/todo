@@ -7,7 +7,7 @@
 </div>
 <% end %>
   <form method = "post" action = "/list">
-
+ <%= csrf_tag %>
     <div class="form-group mb-6">
       <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">List Name</label>
       <input name = "name" type="text" class="form-control

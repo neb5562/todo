@@ -1,11 +1,5 @@
 class UsersController < ApplicationController
 
-  before do
-    if (['/auth/register', '/auth/login'].none? request.path_info) && session['user_id'].nil?
-      redirect('/auth/login')
-    end
-  end
-
   get '/profile' do
     erb :'users/index'
   end

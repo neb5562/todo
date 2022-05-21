@@ -7,7 +7,7 @@
 </div>
 <% end %>
   <form method = "post" action = "/list/<%=params['id']%>/new/todo">
-
+ <%= csrf_tag %>
     <div class="w-full mb-8 md:mb-2">
       <label for="grid-state">
         List

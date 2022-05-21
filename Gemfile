@@ -10,4 +10,5 @@ gem "validation_rules", "~> 1.0.5"
 gem 'sinatra-flash', '~> 0.3.0'
 gem 'bcrypt'
 gem 'stamp', '~> 0.6.0'
+gem 'rack_csrf', '~> 2.6'
 gem 'require_all'

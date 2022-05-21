@@ -8,6 +8,7 @@
 <% end %>
 
   <form method = "post" action = "/todo/<%=@todo['id']%>/edit">
+   <%= csrf_tag %>
   <input type="hidden" name="_method" value="PUT">
 
       <div class="w-full mb-8 md:mb-2">
@@ -125,6 +126,7 @@
 
   </form>
   <form method = "post" action = "/todo/<%=@todo['id']%>/delete">
+   <%= csrf_tag %>
     <input type="hidden" name="_method" value="DELETE">
 
     <button type="submit" class = "float-right text-red-500 text-xs">delete to do</button>
