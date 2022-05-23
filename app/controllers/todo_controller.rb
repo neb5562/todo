@@ -34,7 +34,7 @@ class TodoController < ApplicationController
   post '/list/:id/new/todo' do
     result = TodoValidateService.new(params, current_user['id']).call
 
-    list_id = params['id']
+    list_id = params['list_id'] || params['id']
     unless result.empty? 
       flash[:error_messages] = result
       redirect("/list/#{params['id']}/new/todo")
