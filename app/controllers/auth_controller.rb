@@ -2,13 +2,6 @@ class AuthController < ApplicationController
 
   include BCrypt
 
-  configure do
-    set :views, 'app/views'
-    enable :sessions
-    set :session_secret, "todo"
-    register Sinatra::Flash
-  end
-
   get '/auth/login' do
     erb :'auth/login'
   end
