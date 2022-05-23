@@ -1,0 +1,157 @@
+<div class="content-center">
+
+<main class="container px-2 mx-auto">
+
+ <div class="bg-white shadow rounded-lg p-10">
+            <div class="flex flex-col gap-1 text-center items-center">
+                <p class="font-semibold"><%=current_user['full_name'].capitalize%></p>
+            </div>
+            <div class="flex justify-center items-center gap-2 my-3">
+                <div class="font-semibold text-center mx-4">
+                    <p class="text-gray-400"><%=sprintf("Total #{current_user.lists.count} list#{'s' if current_user.lists.count > 1}")%></p>
+                </div>
+            </div>
+        </div>
+    
+</main>
+
+
+
+<div class="m-auto mt-6 p-6 rounded-lg shadow-lg bg-white max-w-sm">
+    <% unless flash[:error_messages].nil? %>
+<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+  <% flash[:error_messages].each do |error| %>
+    <p class="font-medium"><%=error%></p> 
+  <% end %>
+</div>
+<% end %>
+    <p class = 'text-center'>Update Profile</p>
+    <ul>
+    <li class="text-500 text-xs italic">to update user you always need to enter current password.</li>
+    <li><br></li>
+    <li class="text-500 text-xs italic">if you want to update only email or name leave new passwords blank.</li>
+    </ul>
+    <br>
+
+  <form method = "post" action = "/profile/change_password">
+   <%= csrf_tag %>
+  <input type="hidden" name="_method" value="PUT">
+      <div class="form-group mb-6">
+      <label for="exampleInputfull_name" class="form-label inline-block mb-2 text-gray-700">Full Name</label>
+      <input value = "<%=current_user['full_name']%>" name = "full_name" type="text" class="form-control
+        block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+    </div>
+
+          <div class="form-group mb-6">
+      <label for="exampleInputemail" class="form-label inline-block mb-2 text-gray-700">Email</label>
+      <input value = "<%=current_user['email']%>" name = "email" type="email" class="form-control
+        block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+    </div>
+
+    <div class="form-group mb-6">
+      <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">Current Password</label>
+      <input name = "password" type="password" class="form-control
+        block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputpassword"
+        aria-describedby="passwordHelp" placeholder="Enter current password">
+    </div>
+    <div class="form-group mb-6">
+      <label for="exampleInputPassword1" class="form-label inline-block mb-2 text-gray-700">New Password</label>
+      <input name = "new_password" type="password" class="form-control block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputPassword1"
+        placeholder="Password">
+    </div>
+
+    <div class="form-group mb-6">
+      <label for="exampleInputPassword1" class="form-label inline-block mb-2 text-gray-700">Confirm New Password</label>
+      <input name = "new_password_confirm" type="password" class="form-control block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputPassword1"
+        placeholder="Password">
+    </div>
+
+    <button type="submit" class="
+      px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out">Save</button>
+  </form>
+        <a href="<%=url('/profile/deactivate')%>" class = "float-right text-red-500 text-xs">deactivate account</a>
+</div>
+
+
+
+</div>

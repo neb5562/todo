@@ -1,0 +1,123 @@
+<div class="m-auto mt-6 p-6 rounded-lg shadow-lg bg-white max-w-sm">
+<% unless flash[:error_messages].nil? %>
+<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+  <% flash[:error_messages].each do |error| %>
+    <p class="font-medium"><%=error%></p> 
+  <% end %>
+</div>
+<% end %>
+  <form method = "post" action = "/list/<%=params['id']%>/new/todo">
+ <%= csrf_tag %>
+    <div class="w-full mb-8 md:mb-2">
+      <label for="grid-state">
+        List
+      </label>
+      <div class="relative">
+        <select name = "list_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+          <% @lists.each do |item|%>
+            <option value = "<%=item['id']%>" <%='selected' if (params['id'].to_i == item['id'].to_i)%>><%=item['name']%></option>
+          <% end %>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mb-6">
+      <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">Title</label>
+      <input name = "title" type="text" class="form-control
+        block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputtitle"
+        aria-describedby="titleHelp" placeholder="Enter title">
+    </div>
+        <div class="form-group mb-6">
+      <label for="fullNameHelp" class="form-label inline-block mb-2 text-gray-700">label</label>
+<textarea name = 'label'
+      class="
+        form-control
+        block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+      "
+      id="exampleFormControlTextarea1"
+      rows="3"
+      placeholder="description"
+    ></textarea>
+    </div>
+    <div class="form-group mb-6">
+<div
+    x-data
+    x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'd-m-Y H:i'});"
+    x-ref="datetimewidget"
+    class="flatpickr container mx-auto col-span-6 sm:col-span-6 mt-5"
+>
+    <label for="datetime" class="flex-grow  block font-medium text-sm text-gray-700 mb-1">Deadline DateTime</label>
+    <div class="flex align-middle align-content-center">
+        <input
+            x-ref="datetime"
+            name="deadline"
+            type="text"
+            id="datetime"
+            data-input
+            placeholder="Select.."
+            class="block w-full px-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-l-md shadow-sm"
+
+        >
+        
+        <a
+            class="h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent border-gray-300 border-t border-b border-r"
+            title="clear" data-clear
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mt-2 ml-1" viewBox="0 0 20 20" fill="#c53030">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </a>
+    </div>
+
+</div>
+</div>
+    <button type="submit" class="
+      px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out">Add</button>
+  </form>
+</div>
